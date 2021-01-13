@@ -1,0 +1,75 @@
+﻿@model List<ManageStudentsSystem.ViewModels.ViewStudentViewModel>
+<table id="students" class="table table-hover">
+    <thead>
+    <th>First name</th>
+    <th>Last name</th>
+    <th>Id number</th>
+    <th>Age</th>
+    <th>Email</th>
+    <th>Phone number</th>
+    <th>Address</th>
+    <th>Edit</th>
+    <th>Delete</th>
+    </thead>
+    <tbody>
+        @foreach (var student in Model)
+        {
+            <tr>
+                <td>@student.FirstName</td>
+                <td>@student.LastName</td>
+                <td>@student.IdNumber</td>
+                <td>@student.Age</td>
+                @if (@student.Email == null)
+                {
+                    <td>Empty</td>
+                }
+                else
+                {
+                    <td>@student.Email</td>
+                }
+                @if (@student.PhoneNumber == null)
+                {
+                    <td>Empty</td>
+                }
+                else
+                {
+                    <td>@student.PhoneNumber</td>
+                }
+                @if (@student.Address == null)
+                {
+                    <td>Empty</td>
+                }
+                else
+                {
+                    <td>@student.Address</td>
+                } 
+                
+                
+                <td>
+                    <form asp-controller="ManageStudents" asp-action="EditStudent" asp-route-id="@student.StudentsId">
+                        <button  type="submit" class="btn btn-dark">
+                            Edit
+                        </button>
+                    </form>
+                </td>
+                <td>
+                    <form asp-controller="ManageStudents" asp-action ="DeleteStudent" asp-route-id="@student.StudentsId">
+                        <button type="submit" class="btn btn-danger">
+                            Delete
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@section Scripts
+{
+    <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/datatables/js/dataTables.bootstrap4.min.js"></script>
+    <script>
+        $(document).ready( function () {
+            $('#students').DataTable();
+        } );
+    </script>
+}
